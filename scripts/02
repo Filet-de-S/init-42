@@ -1,0 +1,25 @@
+echo "please enter (active) <username> you want 2 del:"
+
+read usr
+if id -u $usr >/dev/null 2>&1; then
+	if sudo deluser $usr >/dev/null 2>&1; then
+		echo "deleted YYEAP"
+	else
+		echo "it seems it's you.
+	please switch user or press 'y' to continue..
+	it will kill init..KAMIKAZEEEE???? %)"
+		read -sr but >/dev/null 2>&1
+		if [ $but = 'y' ]; then
+			echo "ciao"
+			sleep 1.5
+			echo "
+i'm kidding, it wouldn't del your user :(
+		so, please switch. you can use cmd \"su - <username>\"
+			sry, it's my script as terms of sec:)"
+		else
+			echo "see ya"
+		fi
+	fi
+else
+	echo "bra..user doesn't exist!@@@@@@@@@@@@"
+fi

@@ -1,0 +1,3 @@
+with graphic type in terminal:
+click on the right top triangle: "Debian <username>" –> "Switch user";
+with ssh: <username>@<hostname>
