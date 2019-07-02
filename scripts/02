@@ -1,9 +1,14 @@
 echo "please enter (active) <username> you want 2 del:"
 
 read usr
-if id -u $usr >/dev/null 2>&1; then
+idu=`loginctl list-sessions | awk /$1/'{print$1,$3}' | grep $usr | awk '{print$1}'`
+sta=`loginctl show-session -p State $idu | cut -d= -f2`
+
+if [ $sta = "active" ] 2>/dev/null; then
+	pid=`ps aux | grep $usr | awk /bash$/'{print$2}'`
+	sudo kill $pid
 	if sudo deluser $usr >/dev/null 2>&1; then
-		echo "deleted YYEAP"
+		echo "deleted, YYEAP"
 	else
 		echo "it seems it's you.
 	please switch user or press 'y' to continue..
@@ -14,12 +19,15 @@ if id -u $usr >/dev/null 2>&1; then
 			sleep 1.5
 			echo "
 i'm kidding, it wouldn't del your user :(
-		so, please switch. you can use cmd \"su - <username>\"
-			sry, it's my script as terms of sec:)"
+		so, please switch. you can use cmd \"su <anotherusername>\"
+			sry, it's my script as the terms of sec:)"
 		else
 			echo "see ya"
 		fi
 	fi
 else
-	echo "bra..user doesn't exist!@@@@@@@@@@@@"
+	echo "bra..user doesn't exist or not ACTIVE!"
+	sleep 1.0
+	echo "
+	ADIOS AMIGO"
 fi
