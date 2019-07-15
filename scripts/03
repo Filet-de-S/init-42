@@ -1,0 +1,18 @@
+ # this script checks every 5 min if available local memory is lower
+ # than 500 MB and if yes – will delete user's cache :)
+ #
+ # how to use: 
+ # 1) you can run this in bg, which is not comfy;
+ # 2) cron, baby, cron;
+ # 3) howewer, I haven't found a way to run this on boot: cron needs root,
+ # ../LaunchDaemons also need root to load config file ;(
+ # 
+ # without sudo life is sad..
+
+while true
+do
+	i=`du -shm ~ 2>/dev/null | cut -f1`
+	if [ "$i" -gt "4500" ]; then
+		rm -rf ~/Library/*42_cache* >/dev/null 2>&1; fi
+	sleep 300
+done
